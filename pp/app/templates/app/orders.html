@@ -1,0 +1,38 @@
+{% extends 'app/index.html' %}
+
+{% block title %}
+Orders
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Orders</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Delivery Email</th>
+                <th>Products</th>
+                <th>Status</th>
+                <th>Order Placed Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.pk }}</td>
+                <td>{{ order.email }}</td>
+                <td>{{ order.product_names }}</td>
+                <td style="color: 
+                {% if order.status == 'In Progress' %}
+                orange
+                {% else %}
+                green
+                {% endif %}">{{ order.status }}</td>
+                <td>{{ order.created_at }}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

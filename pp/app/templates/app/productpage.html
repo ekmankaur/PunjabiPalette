@@ -1,0 +1,18 @@
+{%extends 'app/index.html' %}
+{%load static%}
+{%block title%}Product Details{%endblock title%}
+
+{%block content%}
+<div class="card border-0 text-center">
+    <img src="{{product.image.url}}" width="450px" height="650px" class="rounded mx-auto d-block img-fluid mt-5" alt="Responsive image">
+    <div class="card-body">
+      <h5 class="card-title">{{product.title}}</h5>
+      <p class="card-text">{{product.description}}</p>
+      {% csrf_token %}
+      <form action="/addtocart">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
+      </form>
+    </div>
+  </div>
+{%endblock content%}

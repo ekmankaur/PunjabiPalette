@@ -1,0 +1,20 @@
+{%extends 'app/index.html' %}
+{%load static%}
+{%block title%}Home{%endblock title%}
+
+{%block content%}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="banner d-block w-100" src="{%static 'app\images\banner\main_page_banner.jpg' %}" alt="First slide">
+      </div>
+    </div>
+  </div>
+  <!-- footer starts -->
+  <div class="fluid-container fixed-bottom">
+    <footer class="">
+      <p class="text-center text-danger">Please be aware that all the images showcased on this webpage have been created using advanced artificial intelligence technology known as Midjourney.</p>
+    </footer>
+  </div>
+  <!-- footer ends -->
+{%endblock content%}

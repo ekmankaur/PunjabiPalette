@@ -1,0 +1,58 @@
+{% extends 'app/index.html' %}
+{% load static %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+<div class="container-sm mb-5">
+    <div class="row">
+        {% if cart %}
+        <div class="col" width="50px">
+            {% for item in cart %}
+                <div class="col text-center">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" width="200px" height="200px" class="rounded mx-auto d-block img-fluid mt-5" alt="Responsive image">
+                    <h3>{{ item.product.title }}</h3>
+                    <p>${{ item.product.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <button type="button" class="btn btn-primary btn-sm remove-item" pid="{{ item.product.id }}">Remove Item</button>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col text-left my-5">
+            <h3>Total</h3>
+            <p class="accumulatedprice">{{ accumulatedprice }}</p>
+            
+            <a href="{% url 'placeorder' %}" class="btn btn-primary btn" role="button" aria-disabled="true">Place Order</a>
+        </div>
+    </div>
+</div>
+{% else %}
+    <h1 class="text-center my-5">Your cart is empty</h1>
+{% endif %}
+
+<script>
+    // Get all the remove item buttons
+    const removeButtons = document.querySelectorAll('.remove-item');
+
+    // Add click event listeners to each remove item button
+    removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('pid');
+
+            // Send an AJAX request to remove the item from the cart
+            fetch(`/removefromcart/?product_id=${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // If the item was successfully removed, reload the cart page
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
+{% endblock content %}

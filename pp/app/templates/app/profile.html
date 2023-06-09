@@ -1,0 +1,48 @@
+{%extends 'app/index.html' %}
+{%load static%}
+{%block title%}Profile{%endblock title%}
+
+{% block content %}
+<div class="container-sm">
+    {% if request.user.is_authenticated and not request.user.is_superuser %}
+    <h3 class="text-center text-primary my-3">Welcome {{ request.user.username }}</h3></h3>
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-2">
+                <ul class="list-group w-10 ">
+                    <li class="list-group-item"><a href="{% url 'profile'%}" class="btn btn-primary w-100">Update Profile</a></li>
+                </ul>
+            </div>
+            <div class="col-10">
+                <form action="" method="post">
+                    {%csrf_token%}
+
+                    {% for field in form %}
+                    <div class="form-group col my2">
+                        <div class="py-2">{{ field.label_tag }} </div>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="errorlist">
+                            {% for error in field.errors %}
+                            <p class="text-danger my-2">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary my-2">Add/Update</button>
+
+                    {% if messages %}
+                    <div>
+                        {% for message in messages %}
+                        <p class="text-primary">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

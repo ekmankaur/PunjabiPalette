@@ -1,0 +1,35 @@
+{%extends 'app/index.html' %}
+{%load static%}
+{%block title%}Login{%endblock title%}
+
+{% block content %}
+<div class="text-center">
+    <h2>Login</h2>
+    <div class>
+        <form method="POST">
+
+            {% csrf_token %}
+            {% for field in form %}
+
+            <div class="form-group">
+                <div class="my-2">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            </div>
+
+            {% endfor %}
+            <small><a href="{% url 'signup'%}" class="text-muted">Need an account? Click here to signup!</a></small>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary my-2">Login</button>
+
+        {% if form.non_field_errors%}
+            {% for e in form.non_field_errors%}
+                <p class=" text-danger">{{e}}</p>
+            {%endfor%}
+        {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock content %}
